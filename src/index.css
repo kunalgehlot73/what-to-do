@@ -1,1 +1,13 @@
 @import 'tailwindcss';
+* {
+    color: antiquewhite;
+}
+body {
+    background: radial-gradient(125% 125% at 50% 10%, #0d103a 40%,#63e 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    width: 100vw;
+    /* height: 100vh; */
+    overflow-x: hidden;
+}

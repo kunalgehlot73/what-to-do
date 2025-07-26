@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { FaPlus } from "react-icons/fa";
 
 function App() {
   const [todo, setTodo] = useState('')
@@ -52,12 +53,21 @@ function App() {
 
   return (
     <>
-      <div className="container">
-        <div className="input">
-          <input onChange={handleChange} type="text" value={todo} />
-          <button onClick={handleAdd} disabled={todo.length < 1} type="button" >Save</button>
-          <input type="checkbox" onChange={toggleShowFinished} checked={showFinished} /><span>Show Finished</span>
-        </div>
+      <div className="container rounded-3xl" style={{ width: '80vw', margin: '10px auto 0', display: 'flex', alignItems: 'center', flexDirection: 'column', flexWrap: 'wrap', fontFamily: 'monospace', backdropFilter: 'blur(33px)', boxShadow: '0 0 100px 0 #6f0ffa' }}>
+        <div style={{ fontSize: '5rem', width: '100%', textAlign: 'center' }}>WhatToDo</div>
+        <div className='w-full flex justify-center'><div className="input w-1/2 flex justify-center relative gap-2" >
+          <div className='w-full relative'>
+            <input onChange={handleChange} type="text" value={todo} className='border rounded w-full' style={{ height: '50px', fontSize: '25px', padding: '5px' }} />
+            <button onClick={handleAdd} disabled={todo.length < 1} type="button" style={{ height: '50px', position: 'absolute', right: '10px' }} ><FaPlus style={{ fontSize: '25px', fontWeight: 'bolder' }} /></button>
+          </div>
+
+
+          <div className='border' style={{ padding: '5px' }}>
+            {/* <input type="checkbox" id='showFinished' className='hidden w-full h-full' onChange={toggleShowFinished} checked={showFinished} /><label className='w-full h-full' htmlFor="showFinished">Show Finished</label> */}
+            <button onClick={toggleShowFinished} style={{ fontSize: '25px', textWrap: 'nowrap' }}>Show finished</button>
+          </div>
+        </div></div>
+        <div></div>
         {todos.length === 0 && <div>No Todos</div>}
         <div className="cards">
           {todos.map(item => {
