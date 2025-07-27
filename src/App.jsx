@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrashAlt } from "react-icons/fa";
 
 function App() {
   const [todo, setTodo] = useState('')
@@ -36,7 +36,7 @@ function App() {
 
   const handleCheck = (e) => {
     const id = e.target.id
-    const index = todos.findIndex(item => { return item.id === id })
+    const index = todos.findIndex(item => item.id === id)
     let temp = [...todos]
     temp[index].isCompleted = !temp[index].isCompleted
     setTodos(temp)
@@ -47,36 +47,42 @@ function App() {
   }
 
   const handleDelete = (id) => {
-    let newTodos = todos.filter(item => { return item.id !== id })
+    let newTodos = todos.filter(item => item.id !== id)
     setTodos(newTodos)
   }
 
   return (
     <>
-      <div className="container rounded-3xl" style={{ width: '80vw', margin: '10px auto 0', display: 'flex', alignItems: 'center', flexDirection: 'column', flexWrap: 'wrap', fontFamily: 'monospace', backdropFilter: 'blur(33px)', boxShadow: '0 0 100px 0 #6f0ffa' }}>
-        <div style={{ fontSize: '5rem', width: '100%', textAlign: 'center' }}>WhatToDo</div>
-        <div className='w-full flex justify-center'><div className="input w-1/2 flex justify-center relative gap-2" >
-          <div className='w-full relative'>
-            <input onChange={handleChange} type="text" value={todo} className='border rounded w-full' style={{ height: '50px', fontSize: '25px', padding: '5px' }} />
-            <button onClick={handleAdd} disabled={todo.length < 1} type="button" style={{ height: '50px', position: 'absolute', right: '10px' }} ><FaPlus style={{ fontSize: '25px', fontWeight: 'bolder' }} /></button>
+      <div className="rounded-3xl w-11/12 max-w-screen-lg mx-auto mt-4 flex flex-col items-center backdrop-blur-2xl shadow-[0_0_100px_0_#6f0ffa] overflow-hidden">
+        <div className='text-5xl sm:text-6xl md:text-8xl p-4 w-full text-center'>WhatToDo</div>
+        <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-2 px-2'>
+          <div className="w-full sm:w-4/5 flex flex-col sm:flex-row gap-2 relative">
+            <div className='w-full relative border rounded'>
+              <input onChange={handleChange} type="text" value={todo} className='text-lg sm:text-2xl p-2 outline-none w-[93%]' placeholder='Enter a task...'/>
+              <button onClick={handleAdd} disabled={todo.length < 1} type="button" className='h-10 sm:h-12 absolute right-2 top-1/2 transform -translate-y-1/2'>
+                <FaPlus className='text-xl sm:text-2xl font-extrabold' />
+              </button>
+            </div>
+            <div className='border rounded px-4 py-2 text-center'>
+              <button onClick={toggleShowFinished} className=' cursor-pointer w-full text-lg sm:text-2xl whitespace-nowrap'>Show finished</button>
+            </div>
           </div>
-
-
-          <div className='border' style={{ padding: '5px' }}>
-            {/* <input type="checkbox" id='showFinished' className='hidden w-full h-full' onChange={toggleShowFinished} checked={showFinished} /><label className='w-full h-full' htmlFor="showFinished">Show Finished</label> */}
-            <button onClick={toggleShowFinished} style={{ fontSize: '25px', textWrap: 'nowrap' }}>Show finished</button>
-          </div>
-        </div></div>
-        <div></div>
-        {todos.length === 0 && <div>No Todos</div>}
-        <div className="cards">
+        </div>
+        <div className="my-5 p-2 text-lg sm:text-2xl w-full sm:w-4/5">
+          {todos.length === 0 && <div className='text-center'>No Todos</div>}
           {todos.map(item => {
             return (showFinished || !item.isCompleted) && (
-              <div key={item.id} className="card">
-                <input onChange={handleCheck} type="checkbox" id={item.id} checked={item.isCompleted} />
-                <div className="text">{item.todo}</div>
-                <button onClick={() => { handleEdit(item.todo, item.id) }} type="button" className="edit">Edit</button>
-                <button onClick={() => { handleDelete(item.id) }} type="button" className="delete">Delete</button>
+              <div key={item.id} className="card flex flex-col sm:flex-row items-start sm:items-center gap-4 rounded-2xl mb-5 shadow-[0_3px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_7px_75px_0_rgba(99,51,238,0.5)] bg-[rgba(30,20,60,0.8)] p-4 justify-between">
+                <div className='flex items-center gap-4 w-full sm:w-auto'>
+                  <input onChange={handleCheck} type="checkbox" id={item.id} checked={item.isCompleted} className="accent-indigo-600 w-5 h-5 self-center flex- cursor-pointer"/>
+                  <div className={`text-xl w-full sm:flex-1`} style={{textDecoration: item.isCompleted ? 'line-through' : 'none', color: item.isCompleted ? 'rgba(225, 210, 190,0.6)' : 'antiquewhite', wordBreak: 'break-word' }}>
+                    {item.todo}
+                  </div>
+                </div>
+                <div className="flex gap-2 self-end sm:self-center">
+                  <button onClick={() => handleEdit(item.todo, item.id)} type="button" className="edit cursor-pointer rounded text-[1.2rem] hover:bg-[rgba(99,51,238,0.2)] p-[0.44em_0.78em]" aria-label="Edit"><FaEdit/></button>
+                  <button onClick={() => handleDelete(item.id)} type="button" className="cursor-pointer rounded text-[1.2rem] hover:bg-[rgba(240,90,90,0.13)] p-[0.44em_0.78em]" aria-label="Delete"><FaTrashAlt/></button>
+                </div>
               </div>
             )
           })}
@@ -86,4 +92,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
