@@ -59,7 +59,7 @@ function App() {
           <div className="w-full sm:w-4/5 flex flex-col sm:flex-row gap-2 relative">
             <div className='w-full relative border rounded'>
               <input onChange={handleChange} type="text" value={todo} className='text-lg sm:text-2xl p-2 outline-none w-[93%]' placeholder='Enter a task...'/>
-              <button onClick={handleAdd} disabled={todo.length < 1} type="button" className='h-10 sm:h-12 absolute right-2 top-1/2 transform -translate-y-1/2'>
+              <button onClick={handleAdd} disabled={todo.length < 1} type="button" className=' cursor-pointer h-10 sm:h-12 absolute right-2 top-1/2 transform -translate-y-1/2'>
                 <FaPlus className='text-xl sm:text-2xl font-extrabold' />
               </button>
             </div>
